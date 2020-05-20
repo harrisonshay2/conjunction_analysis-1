@@ -8,7 +8,7 @@ knitr::opts_chunk$set(echo=F)
 knitr::opts_chunk$set(warning=F)
 knitr::opts_chunk$set(message=F)
 
-setwd("~/Documents/Centauri/fall part time/conjunction_analysis/")
+setwd("~/conjunction_analysis/")
 library(tidyverse)
 library(readr)
 library(kableExtra)
