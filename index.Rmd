@@ -8,7 +8,7 @@ knitr::opts_chunk$set(echo=F)
 knitr::opts_chunk$set(warning=F)
 knitr::opts_chunk$set(message=F)
 
-setwd("~/conjunction_analysis/")
+setwd("~/conjunction_analysis-1/")
 library(tidyverse)
 library(readr)
 library(kableExtra)
@@ -120,29 +120,11 @@ for (i in 1:nrow(all_conjs_new)) {
                         if_else(conj$Altitude > 615 & conj$Altitude <= 1500, 
                                 predict(lw1, conj$Altitude), 1000)) 
   
-  # numOpSats = 0
-  # for (j in 1:nrow(opSats)) {
-  #   # count how many op sats overlap in altitude
-  #   opSat = opSats[j,]
-  #   conjMinAlt = conj$Altitude - 100
-  #   conjMaxAlt = conj$Altitude + 100
-  #   if ((opSat$perigee > conjMinAlt &
-  #        opSat$apogee < conjMaxAlt) ||
-  #       (opSat$perigee < conjMaxAlt &
-  #        opSat$apogee > conjMaxAlt) ||
-  #       (opSat$perigee < conjMinAlt &
-  #        opSat$apogee > conjMinAlt)) {
-  #     numOpSats = numOpSats + 1
-  #   }
-  # }
-  
-  combinedMass_v = append(combinedMass_v, toString(combinedMass))
+   combinedMass_v = append(combinedMass_v, toString(combinedMass))
   persistence_v = append(persistence_v, persistence)
-  #numOpSats_v = append(numOpSats_v, numOpSats)
-}
+ }
 all_conjs_new$combinedMass = combinedMass_v
 all_conjs_new$persistence = persistence_v
-#all_conjs_new$numOpSats = numOpSats_v
 
 # replace missing mass values
 all_conjs_new = all_conjs_new %>%
@@ -199,32 +181,6 @@ all_conjs = all_conjs %>%
          persistence_s = persistence_s + abs(min_pers),
          SD_s = SD_s + abs(min_SD),
          risk_s = (combinedMass_s + persistence_s + SD_s) / (Range_s))
-
-# clip = pipe("pbcopy", "w")
-# all_conjs %>% group_by(clusterLab) %>%
-#   summarise(avgConseq = mean(conseq, na.rm=T),
-#             avgConseq_s = mean(conseq_s, na.rm=T),
-#             avgCM = mean(combinedMass, na.rm=T),
-#             avgCM_s = mean(combinedMass_s, na.rm=T),
-#             avgPers = mean(persistence),
-#             avgPers_s = mean(persistence_s),
-#             avgSD = mean(SD),
-#             avgSD_s = mean(SD_s),
-#             avgRisk = mean(risk, na.rm=T),
-#             avgRisk_s = mean(risk_s, na.rm=T),
-#             totRisk = sum(risk, na.rm=T),
-#             totRisk_s = sum(risk_s, na.rm=T)) %>%
-#   #kable(digits = 1, format.args = list(big.mark=","))
-#   write.table(file=clip, sep = '\t', row.names = FALSE)
-# close(clip)
-# 
-# all_conjs %>% dplyr::select(c(combinedMass_s,persistence_s, SD_s)) %>%
-#   summarise_all(list(min=min, max=max, mean=mean, sd=sd), na.rm=T) %>%
-#   write.table(file=clip, sep = '\t', row.names = FALSE)
-# 
-# all_conjs %>% arrange(desc(risk)) %>%
-#   head(50) %>%
-#   write.table(file=clip, sep = '\t', row.names = FALSE)
 
 # sum risk for each object:
 # list all conjunctions by first sat, then by second sat, then bind by rows
@@ -673,5 +629,7 @@ SMC_out %>% #head(50) %>%
         panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
   labs(fill="Cluster", y="Risk")+
   scale_fill_brewer(type = "qual")
+#rmarkdown::render(output_dir = "docs")
 ```
+
 
