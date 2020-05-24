@@ -631,5 +631,5 @@ SMC_out %>% #head(50) %>%
   scale_fill_brewer(type = "qual")
 #rmarkdown::render(output_dir = "docs")
 ```
-
+rmarkdown::render(output_dir = "docs")
 
