@@ -2,7 +2,7 @@
 "C:\Program Files\R\R-4.0.0\bin\Rscript.exe" "C:\Users\Harri\OneDrive\Documents\conjunction_analysis-1\daily_update1.R" 
 timeout 30
 "C:\Program Files\R\R-4.0.0\bin\Rscript.exe" -e "library('knitr'); knit('C:/Users/Harri/OneDrive/Documents/conjunction_analysis-1/index.Rmd')
-move index.md "C:\Users\Harri\OneDrive\Documents\conjunction_analysis-1\docs" 
+move index.html "C:\Users\Harri\OneDrive\Documents\conjunction_analysis-1\docs" 
 "C:\Program Files\Git\bin\bash.exe" "C:\Users\Harri\OneDrive\Documents\conjunction_analysis-1\git_update.git"
 
 
