@@ -1,4 +1,4 @@
-@echo off
+
 cd OneDrive\Documents\conjunction_analysis-1
 
 git add .
