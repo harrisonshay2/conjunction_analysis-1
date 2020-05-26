@@ -629,7 +629,6 @@ SMC_out %>% #head(50) %>%
         panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
   labs(fill="Cluster", y="Risk")+
   scale_fill_brewer(type = "qual")
-#rmarkdown::render(output_dir = "docs")
 ```
-rmarkdown::render(output_dir = "docs")
+
 
