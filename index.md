@@ -6,25 +6,6 @@ title: Conjunction Analysis
 
 
 
-```
-## Error in file(con, "r"): cannot open the connection
-```
-
-```
-## Error in .num_to_date(x): object 'DateGenerated' not found
-```
-
-```
-## Error: Result must have length 1268, not 0
-```
-
-```
-## Error in roundDown(Altitude): object 'Altitude' not found
-```
-
-```
-## Error: object 'SD' not found
-```
 
 ## Miss distance vs cumulative count plot
 ![plot of chunk miss_dist_cum_count_plot](figure/miss_dist_cum_count_plot-1.png)
