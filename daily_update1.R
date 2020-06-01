@@ -1,7 +1,7 @@
 library(RDCOMClient)
 library(fs)
 
-search.phrase <- '[External] Conjunction Reports'
+search.phrase <- 'Conjunction Reports'
 
 save.fldr <- 'C:\\Users\\Harri\\OneDrive\\Documents\\conjunction_analysis-1\\conj_data' # Set a root folder to save attachments into
 print(save.fldr)
@@ -19,7 +19,7 @@ results <- search[['Results']]
 index = c(results[['Count']])
 
 
-attachments.obj <- results[[index]][['attachments']]
+attachments.obj <- results[[17]][['attachments']]
   
  
       save.path <- file.path(save.fldr, attachments.obj[[1]][['FileName']]) # Set the save path
