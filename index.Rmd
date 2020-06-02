@@ -21,11 +21,12 @@ library(scales)
 Sys.setenv(TZ='EST')
 mcma_objs = readRDS("RDSfiles/mcma_objs")
 all_conjs = readRDS("RDSfiles/all_conjs")
-#all_conjs_expanded = readRDS("RDSfiles/all_conjs_expanded")
+#all_conjs_new_2016 = readRDS("RDSfiles/all_conjs_new_2016")
 derelicts = readRDS("RDSfiles/derelicts")
 derelictDat = readRDS("RDSfiles/derelictDatNew")
 alt_bins = readRDS("RDSfiles/alt_bins")
 file_list = readRDS("RDSfiles/file_list")
+all_conjs_new = readRDS('RDSfiles/all_conjs_new_2016')
 today = toupper(strftime(Sys.Date(), format="%d%b%Y")) # current day
 path = "conj_data/"
 ```
@@ -193,8 +194,8 @@ secondSet = all_conjs %>%
   dplyr::select(-c(PrimarySatellite, SecondarySatellite))
 
 # append new conjunctions to previous
-all_conjs_expanded = rbind(firstSet, secondSet)
-saveRDS(all_conjs_expanded, "RDSfiles/all_conjs_expanded") # save to RDS file
+all_conjs_new_2016 = rbind(firstSet, secondSet)
+saveRDS(all_conjs_new_2016, "RDSfiles/all_conjs_new_2016") # save to RDS file
 
 ##### 
 #re-fit persistence model - use Loess curve
@@ -244,7 +245,7 @@ country_codes = read_csv("./misc_files/country_codes.csv",
          Country = if_else(str_length(Country) > 20, country, Country))
 
 # plot percent of encounters by country
-p = all_conjs_expanded %>%
+p = all_conjs_new_2016 %>%
   left_join(dplyr::select(mcma_objs, c(noradId, country)), by="noradId") %>%
   mutate(country = if_else(country == "CHBZ", "PRC", country),
          country = replace_na(country, "Other")) %>% 
@@ -276,7 +277,7 @@ ggplot() +
 ```
 
 ```{r barchart500m, fig.width=7.5}
-p = all_conjs_expanded %>%
+p = all_conjs_new_2016 %>%
   filter(Range <= 0.5) %>%
   left_join(dplyr::select(mcma_objs, c(noradId, country)), by="noradId") %>%
   mutate(country = if_else(country == "CHBZ", "PRC", country),
@@ -317,7 +318,7 @@ ggplot() +
 ```{r top50}
 x = c("cc615","cc775","cc850","cc975","cc1200","cc1500","cleo","CHIGH")
 
-mcma_objs_risk = all_conjs_expanded %>%
+mcma_objs_risk = all_conjs_new_2016 %>%
   group_by(noradId) %>% 
   summarise(totalRisk = sum(risk_s)) %>%
   right_join(select(mcma_objs, -c(totalRisk, predicted_ad, DF, spatDensOpSats)), by="noradId") %>% 
@@ -328,7 +329,7 @@ top50 = mcma_objs_risk %>%
   arrange(desc(totalRisk)) %>%
   head(50)
 
-top50 = all_conjs_expanded %>%
+top50 = all_conjs_new_2016 %>%
   filter(noradId %in% top50$noradId) %>%
   group_by(noradId) %>%
   summarise(`num conjs` = n(),
@@ -515,7 +516,7 @@ cluster_summary$volume = c(get_volume(475,659),
                       get_volume(477,1589),
                       get_volume(112,69991))
 
-cluster_summary = all_conjs_expanded %>% 
+cluster_summary = all_conjs_new_2016 %>% 
   left_join(select(mcma_objs, c(noradId, cluster_new)), by="noradId") %>%
   group_by(cluster_new) %>%
   summarise(velocity = mean(Velocity)) %>%
@@ -565,7 +566,7 @@ Top 50 statistically most concerning objects:
 cols_ordered = c("noradId", "name","cluster_new","SMC_risk", "E5", "E1", "MF","DF","SD","CR",
                  "apogee", "perigee","launch","inclination","mass","type","country")
 
-SMC_out = all_conjs_expanded %>% 
+SMC_out = all_conjs_new_2016 %>% 
   group_by(noradId) %>%
   summarise(E5 = length(Range),
             E1 = length(Range[Range <= 1])) %>%

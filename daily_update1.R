@@ -19,7 +19,7 @@ results <- search[['Results']]
 index = c(results[['Count']])
 
 
-attachments.obj <- results[[16]][['attachments']]
+attachments.obj <- results[[index]][['attachments']]
   
  
       save.path <- file.path(save.fldr, attachments.obj[[1]][['FileName']]) # Set the save path
